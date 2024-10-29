@@ -1,0 +1,8 @@
+flask-sqlalchemy = "*"
+sqlalchemy-serializer = "*"
+flask = "*"
+flask-migrate = "*"
+flask-restful = "*"
+flask-jwt-extended = "*"
+flask-cors = "*"
+flask-bcrypt = "*"
