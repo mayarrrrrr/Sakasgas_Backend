@@ -1,4 +1,4 @@
-flask-sqlalchemy == "*"
+flask-sqlalchemy == 3.1.1
 sqlalchemy-serializer == "*"
 flask =="*"
 flask-migrate == "*"
