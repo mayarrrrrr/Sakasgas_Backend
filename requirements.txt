@@ -1,8 +1,8 @@
 flask-sqlalchemy == 3.1.1
-sqlalchemy-serializer == "*"
-flask =="*"
-flask-migrate == "*"
-flask-restful == "*"
-flask-jwt-extended == "*"
-flask-cors == "*"
-flask-bcrypt == "*"
+sqlalchemy-serializer ==  1.4.12
+flask ==3.0.3
+flask-migrate == 4.0.7
+flask-restful==0.3.9
+flask-jwt-extended==4.6.0
+flask-cors==5.0.0
+flask-bcrypt==1.0.1
