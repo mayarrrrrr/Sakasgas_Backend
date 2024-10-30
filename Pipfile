@@ -12,6 +12,8 @@ flask-restful = "*"
 flask-jwt-extended = "*"
 flask-cors = "*"
 flask-bcrypt = "*"
+gunicorn = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 
