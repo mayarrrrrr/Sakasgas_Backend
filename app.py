@@ -9,7 +9,7 @@ from flask_bcrypt import Bcrypt
 
 
 app = Flask(__name__)
-CORS(app,resources={r"/*": {"origins": ["http://localhost:5173", "https://bonmaj-backend.onrender.com"]}})
+CORS(app,resources={r"/orders/*": {"origins": ["http://localhost:5173", "https://bonmaj-backend.onrender.com"]}})
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -224,6 +224,9 @@ class Orders(Resource):
            return make_response(jsonify({"error":["validation errors"]}))
         
         return make_response(new_order.to_dict(),201)
+
+# class OrderByID(Resource):
+#     def     
     
 
 class AdminOrders(Resource):
