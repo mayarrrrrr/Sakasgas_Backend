@@ -9,7 +9,9 @@ from flask_bcrypt import Bcrypt
 
 
 app = Flask(__name__)
-CORS(app,resources={r"/*": {"origins": ["http://localhost:5173", "https://bonmaj-backend.onrender.com","https://bonmaj-backend.onrender.com/orders/*"]}})
+
+CORS(app,resources={r"/*": {"origins": ["http://localhost:5173", "https://bonmaj-backend.onrender.com","https://bonmaj-backend.onrender.com/orders/*"],"methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"]}},supports_credentials=True)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -153,6 +155,7 @@ class Products(Resource):
 
 #  CLIENT ORDERS
 
+@cross_origin(origins=["http://localhost:5173"])
 class Orders(Resource):
     @jwt_required()
     def get(self):
@@ -227,7 +230,36 @@ class Orders(Resource):
 
 # class OrderByID(Resource):
 #     def     
-    
+
+class OrderByUserID(Resource):
+    @jwt_required()
+    def get(self, id):
+       
+        # Fetch the order by ID
+        order = Order.query.filter_by(Order.id==id)
+        
+        if order is None:
+            return jsonify({"error": "Order not found"}), 404
+
+        # Assuming you have a method to convert order to dict, like to_dict
+        order_details = {
+            'order_id': order.id,
+            'status': order.status,
+            'total_price': float(sum(
+                item.product.price * item.quantity for item in order.order_items if item.product
+            )),
+            'products': [
+                {
+                    'name': item.product.name,
+                    'quantity': item.quantity,
+                    'image': item.product.image_url,
+                    'price': item.product.price
+                }
+                for item in order.order_items if item.product
+            ]
+        }
+
+        return jsonify(order_details), 200  
 
 class AdminOrders(Resource):
     @cross_origin()
