@@ -372,7 +372,7 @@ api.add_resource(UserByID, "/users/<int:id>")
 # From clients end 
 api.add_resource(Products, "/products")
 api.add_resource(Orders,"/orders")
-api.add_resource(OrderByUserID,"/orders/<str:id>")
+api.add_resource(OrderByUserID,"/orders/<string:id>")
 # From admin end 
 api.add_resource(AdminProducts,"/adminProducts")
 api.add_resource(AdminProductID,"/adminProducts/<int:id>")
