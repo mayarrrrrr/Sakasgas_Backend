@@ -10,7 +10,7 @@ from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
 
-CORS(app,resources={r"/*": {"origins": ["http://localhost:5173", "https://bonmaj-backend.onrender.com","https://bonmaj-backend.onrender.com/orders/*"],"methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"]}},supports_credentials=True)
+CORS(app,resources={r"/*": {"origins": ["http://localhost:5173", "https://bonmaj-backend.onrender.com","https://bonmaj-backend.onrender.com/orders/*"],"supports_credentials": True,"methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"]}})
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -155,10 +155,10 @@ class Products(Resource):
 
 #  CLIENT ORDERS
 
-
+@cross_origin(origins=["http://localhost:5173"])
 class Orders(Resource):
     @jwt_required()
-    @cross_origin()
+   
     def get(self):
         # current_user_id = get_jwt_identity()
         orders = Order.query.all()
