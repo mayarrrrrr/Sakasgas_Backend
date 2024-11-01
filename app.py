@@ -232,36 +232,45 @@ class Orders(Resource):
 
 
 class OrderByUserID(Resource):
-    @jwt_required()
+    # @jwt_required()
     @cross_origin(origins=["http://localhost:5173"])
     def get(self, id):
-       
-        # Fetch the order by ID
-        order = Order.query.filter_by(Order.user_id==id)
+        # Fetch all orders for the given user_id
+        orders = Order.query.filter(Order.user_id == id).all()
         
-        if order is None:
+        # Check if orders were found
+        if not orders:
+            print(f"No orders found for user_id: {id}")  # Debugging
             return jsonify({"error": "Order not found"}), 404
 
-        # Assuming you have a method to convert order to dict, like to_dict
-        order_details = {
-            'order_id': order.id,
-            "user_id": order.user_id,
-            'status': order.status,
-            'total_price': float(sum(
-                item.product.price * item.quantity for item in order.order_items if item.product
-            )),
-            'products': [
-                {
-                    'name': item.product.name,
-                    'quantity': item.quantity,
-                    'image': item.product.image_url,
-                    'price': item.product.price
-                }
-                for item in order.order_items if item.product
-            ]
-        }
+        # Compile orders details
+        all_order_details = []
+        for order in orders:
+            print(f"Processing order ID: {order.id} for user ID: {id}")  # Debugging
+            
+            # Build order details
+            order_details = {
+                'order_id': order.id,
+                "user_id": order.user_id,
+                'status': order.status,
+                'total_price': float(sum(
+                    item.product.price * item.quantity for item in order.order_items if item.product
+                )),
+                'products': [
+                    {
+                        'name': item.product.name,
+                        'quantity': item.quantity,
+                        'image': item.product.image_url,
+                        'price': item.product.price
+                    }
+                    for item in order.order_items if item.product
+                ]
+            }
+            all_order_details.append(order_details)
+            print(f"Order details: {order_details}")  # Debugging
 
-        return jsonify(order_details), 200  
+        # Return the list of order details
+        return jsonify(all_order_details), 200
 
 class AdminOrders(Resource):
     @cross_origin()
