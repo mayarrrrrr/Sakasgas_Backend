@@ -270,7 +270,7 @@ class OrderByUserID(Resource):
             print(f"Order details: {order_details}")  # Debugging
 
         # Return the list of order details
-        return jsonify(all_order_details), 200
+        return jsonify(all_order_details.to_dict(only=("id","user_id","status", "total_price"))), 200
 
 class AdminOrders(Resource):
     @cross_origin()
@@ -352,7 +352,7 @@ class AdminProductID(Resource):
         db.session.add(product)
         db.session.commit()
 
-        return make_response(product.to_dict(),200)
+        return make_response(product.to_dict(only=('id', 'name', 'description', 'price', 'image_url','quantity_available')),200)
 
     def delete(self,id):
 
