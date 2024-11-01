@@ -155,10 +155,10 @@ class Products(Resource):
 
 #  CLIENT ORDERS
 
-@cross_origin(origins=["http://localhost:5173"])
+
 class Orders(Resource):
     @jwt_required()
-   
+    @cross_origin(origins=["http://localhost:5173"])
     def get(self):
         # current_user_id = get_jwt_identity()
         orders = Order.query.all()
