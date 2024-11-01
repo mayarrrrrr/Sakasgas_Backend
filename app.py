@@ -229,15 +229,15 @@ class Orders(Resource):
         
         return make_response(new_order.to_dict(),201)
 
-# class OrderByID(Resource):
-#     def     
+
 
 class OrderByUserID(Resource):
     @jwt_required()
+    @cross_origin(origins=["http://localhost:5173"])
     def get(self, id):
        
         # Fetch the order by ID
-        order = Order.query.filter_by(Order.id==id)
+        order = Order.query.filter_by(Order.user_id==id)
         
         if order is None:
             return jsonify({"error": "Order not found"}), 404
@@ -245,6 +245,7 @@ class OrderByUserID(Resource):
         # Assuming you have a method to convert order to dict, like to_dict
         order_details = {
             'order_id': order.id,
+            "user_id": order.user_id,
             'status': order.status,
             'total_price': float(sum(
                 item.product.price * item.quantity for item in order.order_items if item.product
@@ -371,6 +372,7 @@ api.add_resource(UserByID, "/users/<int:id>")
 # From clients end 
 api.add_resource(Products, "/products")
 api.add_resource(Orders,"/orders")
+api.add_resource(OrderByUserID,"/orders/<int:id>")
 # From admin end 
 api.add_resource(AdminProducts,"/adminProducts")
 api.add_resource(AdminProductID,"/adminProducts/<int:id>")
