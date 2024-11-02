@@ -270,7 +270,7 @@ class OrderByUserID(Resource):
             print(f"Order details: {order_details}")  # Debugging
 
         # Return the list of order details
-        return jsonify(all_order_details.to_dict(only=("id","user_id","status", "total_price"))), 200
+        return jsonify(all_order_details), 200
 
 class AdminOrders(Resource):
     @cross_origin()
