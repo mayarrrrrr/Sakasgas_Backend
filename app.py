@@ -10,7 +10,7 @@ from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
 
-CORS(app,resources={r"/*": {"origins": ["http://localhost:5173","http://localhost:5174", "https://bonmaj-backend.onrender.com","https://bonmaj-backend.onrender.com/userLogin","https://bonmaj-backend.onrender.com/orders/*","https://bonmaj-3xoo8kq4u-mayars-projects-a7b45ef2.vercel.app"],"supports_credentials": True,"methods": ["GET", "POST","PATCH", "PUT", "DELETE", "OPTIONS"]}})
+CORS(app,resources={r"/*": {"origins": ["http://localhost:5173","http://localhost:5174", "https://bonmaj-backend.onrender.com","https://bonmaj-backend.onrender.com/userLogin",,"https://bonmaj-3xoo8kq4u-mayars-projects-a7b45ef2.vercel.app","https://bonmaj-backend.onrender.com/orders/*"],"supports_credentials": True,"methods": ["GET", "POST","PATCH", "PUT", "DELETE", "OPTIONS"]}})
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
