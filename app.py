@@ -316,6 +316,7 @@ class AdminOrdersById(Resource):
 
 
 class AdminProducts(Resource):
+    @jwt_required()
     def get(self):
         products = [product.to_dict(only=('id', 'name', 'description', 'price', 'image_url','quantity_available',)) for product in Product.query.all()]
         return make_response(products,200)
